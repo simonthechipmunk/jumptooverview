@@ -1,0 +1,84 @@
+# Translation template for "Jump to Overview".
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the extension package.
+# Simon Junga <simonthechipmunk@gmx.de>, 2015.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-01-27 18:01+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: prefs.js:68
+msgid "Show Overview when the current Workspace turns empty"
+msgstr ""
+
+#: prefs.js:69
+msgid ""
+"Opens the Overview when the last Window on the current Workspace is closed"
+msgstr ""
+
+#: prefs.js:70 prefs.js:78 prefs.js:87
+msgid "\t\t→  Landing Page"
+msgstr ""
+
+#: prefs.js:70
+msgid ""
+"Select the Landing Page for closing the last Window on the current Workspace"
+msgstr ""
+
+#: prefs.js:71 prefs.js:79 prefs.js:88
+msgid "Overview"
+msgstr ""
+
+#: prefs.js:71 prefs.js:79 prefs.js:88
+msgid "All Applications"
+msgstr ""
+
+#: prefs.js:71 prefs.js:79 prefs.js:88
+msgid "Frequent Apps"
+msgstr ""
+
+#: prefs.js:76
+msgid "Show Overview when the last Workspace turns empty"
+msgstr ""
+
+#: prefs.js:77
+msgid "Opens the Overview even if the current Workspace is the last active one"
+msgstr ""
+
+#: prefs.js:78
+msgid ""
+"Select the Landing Page for closing the last Window on the last remaining "
+"Workspace"
+msgstr ""
+
+#: prefs.js:85
+msgid "Show Overview after Shell startup"
+msgstr ""
+
+#: prefs.js:86
+msgid "Opens the Overview whenever Gnome-Shell is started on an empty desktop"
+msgstr ""
+
+#: prefs.js:87
+msgid "Select the Landing Page for Shell Startup"
+msgstr ""
+
+#: prefs.js:98
+msgid "Ignore minimized Windows"
+msgstr ""
+
+#: prefs.js:99
+msgid ""
+"Opens the Overview even if there are minimized windows on the current "
+"Workspace"
+msgstr ""

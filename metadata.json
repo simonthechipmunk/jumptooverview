@@ -1,0 +1,14 @@
+{
+  "description": "Opens the Overview or Apps Page on various selectable Events:\n\n* Open the Overview when the last window on the current workspace is closed (Gnome-Shell < 3.10 behaviour)\n* Jump to the Overview when Gnome Shell is restarted", 
+  "name": "Jump to Overview", 
+  "settings-schema": "org.gnome.shell.extensions.jumptooverview", 
+  "shell-version": [
+    "3.10", 
+    "3.12", 
+    "3.14"
+  ], 
+  "url": "https://github.com/simonthechipmunk/jumptooverview.git", 
+  "uuid": "jumptooverview@simonthechipmunk.noreply.com", 
+  "gettext-domain": "jumptooverview",
+  "version": 7
+}
