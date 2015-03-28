@@ -5,10 +5,11 @@
   "shell-version": [
     "3.10", 
     "3.12", 
-    "3.14"
+    "3.14",
+    "3.16"
   ], 
   "url": "https://github.com/simonthechipmunk/jumptooverview.git", 
   "uuid": "jumptooverview@simonthechipmunk.noreply.com", 
   "gettext-domain": "jumptooverview",
-  "version": 7
+  "version": 8
 }
