@@ -26,6 +26,8 @@ const Main = imports.ui.main;
 const Mainloop = imports.mainloop;
 
 // utilities for external programs and command line
+const Config = imports.misc.config;
+const ShellVersion = Config.PACKAGE_VERSION.split('.');
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
 
@@ -163,7 +165,7 @@ function _checkStartup() {
 	let checkOK = true;
 	
 	// check every active workspace
-	for (i = 0; i < activeWorkspacesStartup; i ++) {
+	for (var i = 0; i < activeWorkspacesStartup; i ++) {
 
 		let currentWorkspaceCheck = global.screen.get_workspace_by_index(i);
 		let windowListCheck = currentWorkspaceCheck.list_windows();
