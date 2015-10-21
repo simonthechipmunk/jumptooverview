@@ -1,7 +1,7 @@
 # Translation template for "Jump to Overview".
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the extension package.
-# Simon Junga <simonthechipmunk@gmx.de>, 2015.
+# Simon Junga <simonthechipmunk at gmx.de>, 2015.
 #
 #, fuzzy
 msgid ""

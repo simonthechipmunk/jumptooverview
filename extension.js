@@ -8,7 +8,7 @@
  *	> Jump to the Overview when Gnome Shell is restarted
  *
  *
- * Author: Simon Junga (simonthechipmunk@gmx.de)
+ * Author: Simon Junga (simonthechipmunk at gmx.de)
  *
  *
  * This program is free software; you can redistribute it and/or modify it
@@ -69,15 +69,13 @@ function enable() {
 
 	// open the Overview on Shell startup if set in the preferences
 	if(Prefs._getOnStartup() && global.display.focus_window == null) {
-
-		_checkStartup();
 	
-		// if overview didn't show, try again after 1 second
-		// (may be caused by a slow machine or autostart applications)
-		if(Main.overview._shown == false){
-
-			eventStartup = GLib.timeout_add_seconds(0, 1, _checkStartup);
-		}
+		// Check for startup conditions as soon as the mainloop turns idle (make sure gnome-shell is fully loaded)
+		eventStartup = GLib.idle_add(GLib.PRIORITY_LOW, function() { 
+			_checkStartup();
+			return false;
+            
+		});
 
 	}
 
@@ -93,7 +91,7 @@ function disable() {
         global.screen.disconnect(workspaceChanged);
         currentWorkspace.disconnect(windowRemoved);
 
-	// remove timer event
+	// remove mainloop event
 	if(eventStartup) {
 		Mainloop.source_remove(eventStartup);
 	}
@@ -110,7 +108,7 @@ function _checkWorkspace() {
 
         // disconnect former 'window-removed' signal (if any)
         if(currentWorkspace) {
-        currentWorkspace.disconnect(windowRemoved);
+        	currentWorkspace.disconnect(windowRemoved);
         }
    
         // get the current workspace
@@ -192,7 +190,6 @@ function _checkStartup() {
 
 	}
 
-return false;
 
 }
 
