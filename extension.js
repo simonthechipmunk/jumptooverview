@@ -42,7 +42,7 @@ const Utils = Me.imports.utils;
 
 
 // define global variables
-let workspaceChanged, currentWorkspace, windowRemoved;
+let workspaceChanged, currentWorkspace, windowRemoved, windowAdded;
 let eventStartup=null;
 
 
@@ -90,6 +90,7 @@ function disable() {
         // disconnect from signals
         global.screen.disconnect(workspaceChanged);
         currentWorkspace.disconnect(windowRemoved);
+        currentWorkspace.disconnect(windowAdded);
 
 	// remove mainloop event
 	if(eventStartup) {
@@ -109,10 +110,26 @@ function _checkWorkspace() {
         // disconnect former 'window-removed' signal (if any)
         if(currentWorkspace) {
         	currentWorkspace.disconnect(windowRemoved);
+        	currentWorkspace.disconnect(windowAdded);
         }
    
         // get the current workspace
         currentWorkspace = global.screen.get_active_workspace();
+
+	//get intitial windows on the current workspace
+	let former_windowList = currentWorkspace.list_windows();
+
+
+
+
+	// connect to window-added on current workspace
+        windowAdded = currentWorkspace.connect('window-added', function() {
+
+        	//update windowlist
+        	former_windowList = currentWorkspace.list_windows();
+
+        });
+
 
         // connect to window-removed on current workspace
         windowRemoved = currentWorkspace.connect('window-removed', function() { 
@@ -129,9 +146,19 @@ function _checkWorkspace() {
 				&& Prefs._getIgnoreMinimized()) ) {activeWindows --};
 		}
 
+		// prevent popup notifications (e.g. Skype) from triggering the Overview on an empty Desktop
+		// BUG: Skype notifications don't register as windows but trigger the "window-removed" event
+		let registered_window_removed = true;
+		if(former_windowList.length == windowList.length){
+				registered_window_removed = false;
+		}
+
+		former_windowList = windowList;
+
+
 
                 // check for "last window closed", "overview shown" and preferences settings
-                if(activeWindows < 1 && Main.overview._shown == false ) {
+                if(activeWindows < 1 && Main.overview._shown == false && registered_window_removed) {
 
 			if (Prefs._getOnCurrent() && (activeWorkspaces > 2 || Prefs._getDynamicWorkspaceSetting() == false)) {
                         	// show landing page
