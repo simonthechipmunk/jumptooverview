@@ -9,10 +9,12 @@
     "3.16",
     "3.18",
     "3.20",
-    "3.22"
+    "3.22",
+    "3.24",
+    "3.26"
   ], 
   "url": "https://github.com/simonthechipmunk/jumptooverview", 
   "uuid": "jumptooverview@simonthechipmunk.noreply.com", 
   "gettext-domain": "jumptooverview",
-  "version": 12
+  "version": 13
 }

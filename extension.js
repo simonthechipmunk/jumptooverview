@@ -137,42 +137,69 @@ function _checkWorkspace() {
 
                 // get active windows on current workspace and number of workspaces
                 let windowList = currentWorkspace.list_windows();
-		let activeWindows = windowList.length;
+		let activeWindowCount = windowList.length;
+		let primaryWindowCount = 0;
                 let activeWorkspaces = global.screen.get_n_workspaces();
+                let primaryMonitor = global.screen.get_primary_monitor();
 
-		// ignore widgets (e.g. screenlets) and minimized windows 
-		for each (var window in windowList) {
-			if(window.is_skip_taskbar() || (!window.showing_on_its_workspace() 
-				&& Prefs._getIgnoreMinimized()) ) {activeWindows --};
-		}
-
-		// prevent popup notifications (e.g. Skype) from triggering the Overview on an empty Desktop
-		// BUG: Skype notifications don't register as windows but trigger the "window-removed" event
-		let registered_window_removed = true;
+		// prevent popup notifications (e.g. Skype legacy) from triggering the Overview on an empty Desktop
+		// BUG: Skype legacy notifications don't register as windows but trigger the "window-removed" event
+		//if we detect such a window there's no need to open the overview. skip evaluation and continue
 		if(former_windowList.length == windowList.length){
-				registered_window_removed = false;
+			//nothing to do
 		}
-
-		former_windowList = windowList;
-
-
-
-                // check for "last window closed", "overview shown" and preferences settings
-                if(activeWindows < 1 && Main.overview._shown == false && registered_window_removed) {
-
-			if (Prefs._getOnCurrent() && (activeWorkspaces > 2 || Prefs._getDynamicWorkspaceSetting() == false)) {
-                        	// show landing page
-                        	_OpenLandingPage(Prefs._getLandingStandard() );
-
-			}
-
-			else if (Prefs._getOnLastWS() && activeWorkspaces <= 2 && Prefs._getDynamicWorkspaceSetting() == true) {
-				// show landing page
-                        	_OpenLandingPage(Prefs._getLandingOnLastWS() );
-
-			}
+		else{
+			//check for removed window and open the overview if necessary
 			
-                }
+			for each (var window in former_windowList) {
+			
+				//count formerly active windows on the primary monitor
+				if(window.get_monitor() == primaryMonitor && !window.is_skip_taskbar()){
+					primaryWindowCount++
+				}			
+			}
+		
+			for each (var window in windowList) {
+			
+				// ignore widgets (e.g. screenlets) and minimized windows
+				if(window.is_skip_taskbar() 
+					|| (window.get_monitor() != primaryMonitor && Prefs._getIgnoreSecondary())
+					|| (!window.showing_on_its_workspace() && Prefs._getIgnoreMinimized()) ){
+						activeWindowCount--
+				}
+			
+				//count currently active windows on the primary monitor
+				if(window.get_monitor() == primaryMonitor && !window.is_skip_taskbar()){
+					primaryWindowCount--
+				}			
+			}
+		
+			//if set in the preferences, ignore windows if they have been removed from a secondary monitor
+			let primary_window_removed = true;
+			if(primaryWindowCount == 0 && Prefs._getIgnoreSecondary()){
+				primary_window_removed = false;
+			}		
+		
+
+		        // check for "last window closed", "overview shown" and preferences settings
+		        if(activeWindowCount < 1 && Main.overview._shown == false && primary_window_removed) {
+
+				if (Prefs._getOnCurrent() && (activeWorkspaces > 2 || Prefs._getDynamicWorkspaceSetting() == false)) {
+		                	// show landing page
+		                	_OpenLandingPage(Prefs._getLandingStandard() );
+
+				}
+
+				else if (Prefs._getOnLastWS() && activeWorkspaces <= 2 && Prefs._getDynamicWorkspaceSetting() == true) {
+					// show landing page
+		                	_OpenLandingPage(Prefs._getLandingOnLastWS() );
+
+				}
+			
+		        }
+		}
+                
+                former_windowList = windowList;
 
             
 	});

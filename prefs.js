@@ -65,17 +65,17 @@ function buildPrefsWidget() {
 	let frame = new Gtk.Box({orientation: Gtk.Orientation.VERTICAL, border_width: 10, margin: 10});
 
 	// add items to the widget frame
-	frame.add( _createSwitchbox( _("Show Overview when the current Workspace turns empty"), 
-		_("Opens the Overview when the last Window on the current Workspace is closed"), _getOnCurrent, _setOnCurrent ));
-	frame.add( _createComboBox( _("		→  Landing Page"), _("Select the Landing Page for closing the last Window on the current Workspace"),
+	frame.add( _createSwitchbox( _("Show Overview when the current Workspace turns empty" ), 
+		_("Open the Overview when the last Window on the current Workspace is closed"), _getOnCurrent, _setOnCurrent ));
+	frame.add( _createComboBox( _(" "), _("Select the Overview Page for closing the last Window on the current Workspace"),
 			{'overview': _("Overview"), 'applications' : _("All Applications"), 'frequent' : _("Frequent Apps")}, _getLandingStandard, _setLandingStandard ));
 	frame.add( _createSeparator() );
 
 	if (_getDynamicWorkspaceSetting() ) {
 		// only available if Workspaces are managed dynamically
 		frame.add( _createSwitchbox( _("Show Overview when the last Workspace turns empty"), 
-			_("Opens the Overview even if the current Workspace is the last active one"), _getOnLastWS, _setOnLastWS ));
-		frame.add( _createComboBox( _("		→  Landing Page"), _("Select the Landing Page for closing the last Window on the last remaining Workspace"),
+			_("Open the Overview even if the current Workspace is the last active one"), _getOnLastWS, _setOnLastWS ));
+		frame.add( _createComboBox( _(" "), _("Select the Overview Page for closing the last Window on the last remaining Workspace"),
 				{'overview': _("Overview"), 'applications' : _("All Applications"), 'frequent' : _("Frequent Apps")}, _getLandingOnLastWS, _setLandingOnLastWS ));
 		frame.add( _createSeparator() );
 
@@ -83,8 +83,8 @@ function buildPrefsWidget() {
 
 
 	frame.add( _createSwitchbox( _("Show Overview after Shell startup"), 
-		_("Opens the Overview whenever Gnome-Shell is started on an empty desktop"), _getOnStartup, _setOnStartup ));
-	frame.add( _createComboBox( _("		→  Landing Page"), _("Select the Landing Page for Shell Startup"),
+		_("Open the Overview whenever Gnome-Shell is started on an empty desktop"), _getOnStartup, _setOnStartup ));
+	frame.add( _createComboBox( _(" "), _("Select the Overview Page for Shell Startup"),
 			{'overview': _("Overview"), 'applications' : _("All Applications"), 'frequent' : _("Frequent Apps")}, _getLandingStartup, _setLandingStartup ));
 	frame.add( _createSeparator() );
 
@@ -96,7 +96,11 @@ function buildPrefsWidget() {
 
 
 	frame.add( _createSwitchbox( _("Ignore minimized Windows"), 
-		_("Opens the Overview even if there are minimized windows on the current Workspace"), _getIgnoreMinimized, _setIgnoreMinimized ));
+		_("Open the Overview even if there are minimized windows on the current Workspace"), _getIgnoreMinimized, _setIgnoreMinimized ));
+	
+		
+	frame.add( _createSwitchbox( _("Ignore Windows on Secondary Monitors"), 
+		_("Open the Overview even if there are active windows on secondary Monitors"), _getIgnoreSecondary, _setIgnoreSecondary ));
 
 
 
@@ -115,7 +119,7 @@ function _createSwitchbox(text, tooltip, getFunction, setFunction) {
 // create box with toggle switch
 	let box = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, margin: 5});
 	let label = new Gtk.Label({ label: text, xalign: 0, tooltip_text: tooltip });
-	let toggleswitch = new Gtk.Switch({ active: getFunction() });
+	let toggleswitch = new Gtk.Switch({ active: getFunction(), tooltip_text: tooltip });
 
 	// connect to "toggled" emit signal
 	toggleswitch.connect('notify::active', setFunction);
@@ -133,7 +137,7 @@ function _createComboBox(text, tooltip, values, getFunction, setFunction) {
 // create box with combo selection field
 	let box = new Gtk.Box({ orientation: Gtk.Orientation.HORIZONTAL, margin: 5});
 	let label = new Gtk.Label({ label: text, xalign: 0, tooltip_text: tooltip });
-	let widget = new Gtk.ComboBoxText();
+	let widget = new Gtk.ComboBoxText({ tooltip_text: tooltip });
 	for (id in values) {
 		widget.append(id, values[id]);
 	}
@@ -193,6 +197,14 @@ function _getIgnoreMinimized() {
 
 function _setIgnoreMinimized() {
     settings.set_boolean('ignoreminimized', !_getIgnoreMinimized());
+}
+
+function _getIgnoreSecondary() {
+	return settings.get_boolean('ignoresecondary');
+}
+
+function _setIgnoreSecondary() {
+    settings.set_boolean('ignoresecondary', !_getIgnoreSecondary());
 }
 
 

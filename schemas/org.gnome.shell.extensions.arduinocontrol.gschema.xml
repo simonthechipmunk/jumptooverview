@@ -3,22 +3,27 @@
         <key name="oncurrentworkspace" type="b">
             <default>true</default>
             <summary>Overview on closing current Workspace</summary>
-            <description>Opens the Overview when the last Window on the current Workspace is closed</description>
+            <description>Open the Overview when the last Window on the current Workspace is closed</description>
         </key>
         <key name="onlastworkspace" type="b">
             <default>false</default>
             <summary>Overview on closing last Workspace</summary>
-            <description>Opens the Overview even if the current Workspace is the last one</description>
+            <description>Open the Overview even if the current Workspace is the last one</description>
+        </key>
+        <key name="ignoresecondary" type="b">
+            <default>true</default>
+            <summary>Ignore Windows on Secondary Monitors</summary>
+            <description>Open the Overview even if there are active Windows on secondary Monitors</description>
         </key>
         <key name="ignoreminimized" type="b">
             <default>true</default>
             <summary>Ignore minimized Windows</summary>
-            <description>Opens the Overview even if there are minimized windows on the current Workspace</description>
+            <description>Open the Overview even if there are minimized windows on the current Workspace</description>
         </key>
 	<key name="onstartup" type="b">
             <default>false</default>
             <summary>Overview on Shell startup</summary>
-            <description>Opens the Overview whenever Gnome-Shell is started on an empty desktop</description>
+            <description>Open the Overview whenever Gnome-Shell is started on an empty desktop</description>
         </key>
         <key name="landingstartup" type="s">
             <default>'applications'</default>
