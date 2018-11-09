@@ -151,7 +151,7 @@ function _checkWorkspace() {
 		else{
 			//check for removed window and open the overview if necessary
 			
-			for each (var window in former_windowList) {
+			for (let window of former_windowList) {
 			
 				//count formerly active windows on the primary monitor
 				if(window.get_monitor() == primaryMonitor && !window.is_skip_taskbar()){
@@ -159,7 +159,7 @@ function _checkWorkspace() {
 				}			
 			}
 		
-			for each (var window in windowList) {
+			for (let window of windowList) {
 			
 				// ignore widgets (e.g. screenlets) and minimized windows
 				if(window.is_skip_taskbar() 
@@ -217,14 +217,14 @@ function _checkStartup() {
 	let checkOK = true;
 	
 	// check every active workspace
-	for (var i = 0; i < activeWorkspacesStartup; i ++) {
+	for (let i = 0; i < activeWorkspacesStartup; i ++) {
 
 		let currentWorkspaceCheck = global.screen.get_workspace_by_index(i);
 		let windowListCheck = currentWorkspaceCheck.list_windows();
 		let activeWindowsCheck = windowListCheck.length;
 
 		
-		for each (var window in windowListCheck) {
+		for (let window of windowListCheck) {
 			if(window.is_skip_taskbar() ) {activeWindowsCheck --};
 		}
 
